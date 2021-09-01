@@ -15,109 +15,68 @@ namespace TestPage.Pages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
+            if (this.IsPostBack == false)
             {
-                // Set color options.
-                //lstBackColor.Items.Add("White");
-                //lstBackColor.Items.Add("Red");
-                //lstBackColor.Items.Add("Green");
-                //lstBackColor.Items.Add("Blue");
-                //lstBackColor.Items.Add("Yellow");
-
+                // Get the list of colors.
                 string[] colorArray = Enum.GetNames(typeof(KnownColor));
-                lstBackColor.DataSource = colorArray;
-                lstBackColor.DataBind();
-
-
-                // Set font options.
-                //lstFontName.Items.Add("Times New Roman");
-                //lstFontName.Items.Add("Arial");
-                //lstFontName.Items.Add("Verdana");
-                //lstFontName.Items.Add("Tahoma");
-
+                ddlBackColor.DataSource = colorArray;
+                ddlBackColor.DataBind();
+                ddlForeColor.DataSource = colorArray;
+                ddlForeColor.DataBind();
+                ddlForeColor.SelectedIndex = 34;
+                ddlBackColor.SelectedIndex = 163;
+                // Get the list of available fonts and add them to the font list.
                 InstalledFontCollection fonts = new InstalledFontCollection();
-
                 foreach (FontFamily family in fonts.Families)
                 {
-                    lstFontName.Items.Add(family.Name);
+                    ddlFontName.Items.Add(family.Name);
                 }
-
-
-                // Set border style options by adding a series of
-                // ListItem objects.
-                //ListItem item = new ListItem();
-
-                // The item text indicates the name of the option.
-                //item.Text = BorderStyle.None.ToString();
-
-                // The item value records the corresponding integer
-                // from the enumeration. To obtain this value, you
-                // must cast the enumeration value to an integer,
-                // and then convert the number to a string so it
-                // can be placed in the HTML page.
-                //item.Value = ((int)BorderStyle.None).ToString();
-
-                // Add the item.
-                //lstBorder.Items.Add(item);
-
-                // Now repeat the process for two other border styles.
-                //item = new ListItem();
-                //item.Text = BorderStyle.Double.ToString();
-                //item.Value = ((int)BorderStyle.Double).ToString();
-                //lstBorder.Items.Add(item);
-                //item = new ListItem();
-                //item.Text = BorderStyle.Solid.ToString();
-                //item.Value = ((int)BorderStyle.Solid).ToString();
-                //lstBorder.Items.Add(item);
-
+                // Set border style options.
                 string[] borderStyleArray = Enum.GetNames(typeof(BorderStyle));
-                lstBorder.DataSource = borderStyleArray;
-                lstBorder.DataBind();
-
+                rblBorder.DataSource = borderStyleArray;
+                rblBorder.DataBind();
                 // Select the first border option.
-                lstBorder.SelectedIndex = 0;
-
+                rblBorder.SelectedIndex = 0;
                 // Set the picture.
-                imgDefault.ImageUrl = "../Images/defaultpic.jpg";
+                imgDefault.ImageUrl = "../images/defaultpic.png";
             }
-
         }
-
-        protected void ControlChanged(object sender, System.EventArgs e)
-        {
-            // Refresh the greeting card (because a control was changed).
-            UpdateCard();
-        }
-        protected void cmdUpdate_Click(object sender, EventArgs e)
-        {
-            UpdateCard();
-        }
-
-        private void UpdateCard() 
+        private void UpdateCard()
         {
             // Update the color.
-            pnlCard.BackColor = Color.FromName(lstBackColor.SelectedItem.Text);
+            pnlCard.BackColor = Color.FromName(ddlBackColor.SelectedItem.Text);
+            lblGreeting.ForeColor = Color.FromName(ddlForeColor.SelectedItem.Text);
             // Update the font.
-            lblGreeting.Font.Name = lstFontName.SelectedItem.Text;
-            if (Int32.Parse(txtFontSize.Text) > 0)
+            lblGreeting.Font.Name = ddlFontName.SelectedItem.Text;
+            try
             {
-                lblGreeting.Font.Size =
-                 FontUnit.Point(Int32.Parse(txtFontSize.Text));
+                if (Int32.Parse(txtFontSize.Text) > 0)
+                {
+                    lblGreeting.Font.Size = FontUnit.Point(Int32.Parse(txtFontSize.Text));
+                }
             }
-
-
-            // Update the border style. This requires two conversion steps.
-            // First, the value of the list item is converted from a string
-            // into an integer. Next, the integer is converted to a value in
-            // the BorderStyle enumeration.
-            //int borderValue = Int32.Parse(lstBorder.SelectedItem.Value);
-            //pnlCard.BorderStyle = (BorderStyle)borderValue;
-
-            TypeConverter converter = TypeDescriptor.GetConverter(typeof(BorderStyle));
-            pnlCard.BorderStyle = (BorderStyle)converter.ConvertFromString(lstBorder.SelectedItem.Text);
-
+            catch
+            {
+                // Ignore invalid value.
+            }
+            try
+            {
+                if (Int32.Parse(txtFontSize.Text) > 0)
+                {
+                    lblGreeting.Font.Size =
+                        FontUnit.Point(Int32.Parse(txtFontSize.Text));
+                }
+            }
+            catch
+            {
+                // Ignore invalid value.
+            }
+            // Find the appropriate TypeConverter for the BorderStyle enumeration.
+            TypeConverter cnvrt = TypeDescriptor.GetConverter(typeof(BorderStyle));
+            // Update the border style using the value from the converter.
+            pnlCard.BorderStyle = (BorderStyle)cnvrt.ConvertFromString(rblBorder.SelectedItem.Text);
             // Update the picture.
-            if (chkPicture.Checked)
+            if (chkPicture.Checked == true)
             {
                 imgDefault.Visible = true;
             }
@@ -127,6 +86,16 @@ namespace TestPage.Pages
             }
             // Set the text.
             lblGreeting.Text = txtGreeting.Text;
+        }
+        protected void ControlChanged(Object sender, EventArgs e)
+        {
+            // Refresh the greeting card (because a control was changed).
+            UpdateCard();
+        }
+        protected void cmdUpdate_Click(object sender, EventArgs e)
+        {
+            // Refresh the greeting card (because the button was clicked).
+            UpdateCard();
         }
     }
 }

@@ -132,6 +132,7 @@
     <Content Include="Images\pic2.JPG" />
     <Content Include="Pages\CheckBoxTest.aspx" />
     <Content Include="Pages\CurrencyConverter.aspx" />
+    <Content Include="Pages\CustomerForm.aspx" />
     <Content Include="Pages\EventTracker.aspx" />
     <Content Include="Pages\GreetingCardMaker.aspx" />
     <Content Include="Pages\TestTable.aspx" />
@@ -210,6 +211,13 @@
     </Compile>
     <Compile Include="Pages\CurrencyConverter.aspx.designer.cs">
       <DependentUpon>CurrencyConverter.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CustomerForm.aspx.cs">
+      <DependentUpon>CustomerForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\CustomerForm.aspx.designer.cs">
+      <DependentUpon>CustomerForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\EventTracker.aspx.cs">
       <DependentUpon>EventTracker.aspx</DependentUpon>

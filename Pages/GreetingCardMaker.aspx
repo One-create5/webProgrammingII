@@ -8,43 +8,37 @@
 </head>
 <body>
     <form runat="server">
-        <div>
-            <!-- Controls -->
+        <div style="width: 700px; background-color: lightblue; margin: 0 auto;">
+            <div style="background-color: lightyellow; border: 4px solid black; width: 250px; float:left; padding: 10px; margin: 0 auto;">
+                Choose a background color:<br />
+                <asp:dropdownlist ID="ddlBackColor" runat="server" AutoPostBack="True" onselectedindexchanged="ControlChanged"></asp:dropdownlist><br /> <br />
+                Choose a foreground (text) color:<br />
+                <asp:dropdownlist ID="ddlForeColor" runat="server"  AutoPostBack="True" onselectedindexchanged="ControlChanged"></asp:dropdownlist><br /> <br />
+                Choose a font name:<br />
+                <asp:dropdownlist ID="ddlFontName" runat="server" AutoPostBack="True" onselectedindexchanged="ControlChanged"></asp:dropdownlist><br /> <br />
+                Specify&nbsp;a font size:<br />
+                <asp:textbox ID="txtFontSize" runat="server" AutoPostBack="True" ontextchanged="ControlChanged"></asp:textbox><br /> <br />
+                Choose a border style:<br />
+                <asp:radiobuttonlist ID="rblBorder" runat="server"  Font-Size="X-Small" AutoPostBack="True" RepeatColumns="2" onselectedindexchanged="ControlChanged">
 
-            <!-- Background color -->
-            Choose a background color: <br />
-            <asp:DropDownList ID="lstBackColor" AutoPostBack="true" runat="server" 
-                OnSelectedIndexChanged="ControlChanged" Width="194px" Height="22px" ></asp:DropDownList> <br /> <br />
+                </asp:radiobuttonlist><br /><br />
+                <asp:checkbox ID="chkPicture" runat="server" Text="Add the Default Picture" AutoPostBack="True" oncheckedchanged="ControlChanged">
 
-            <!-- font -->
-            Choose a font: <br />
-            <asp:DropDownList ID="lstFontName" runat="server" Width="194px" Height="22px" ></asp:DropDownList> <br /> <br />
-            
-        
-            <!-- font size -->
-            Specify a numeric font size: <br />
-            <asp:TextBox ID="txtFontSize" runat="server" /> <br /> < <br />
+                </asp:checkbox><br /><br /> Enter the greeting text below:<br />
+                <asp:textbox ID="txtGreeting" runat="server" TextMode="MultiLine" AutoPostBack="True" ontextchanged="ControlChanged"></asp:textbox><br /> <br />
+                <asp:button ID="cmdUpdate" runat="server"  Text="Update" onclick="cmdUpdate_Click"></asp:button>
 
-            <!-- border style -->
-            Choose a border style: <br />
-            <asp:RadioButtonList ID="lstBorder" runat="server" Width="177px" Height="59px" /> <br /><br /> 
-            <asp:CheckBox ID="chkPicture" runat="server" Text="Add the Default Picture"> </asp:CheckBox> <br /> <br />
-            Enter the greeting text below: <br />
-            <asp:TextBox ID="txtGreeting" runat="server" Width="240px" Height="85px" TextMode="MultiLine" /> <br /> <br />
+            </div>
+            <asp:panel ID="pnlCard" CssClass="fltlt" runat="server" Height="570px" Width="300px" HorizontalAlign="Center">
+                <br /><br />
+                <asp:Label ID="lblGreeting" runat="server" Height="150px" Width="250px"></asp:Label>
+                <br /><br /><br />
+                <asp:Image ID="imgDefault" runat="server" Height="160px" Width="212px" Visible="False"></asp:Image>
 
-            <asp:Button ID="cmdUpdate" OnClick="cmdUpdate_Click" Text="Update" runat="server" Width="71px" Height="24px" />
+            </asp:panel>
 
         </div>
-
-        <!-- Card: -->
-
-        <asp:Panel ID="pnlCard" runat="server" Width="339px" Height="481px" HorizontalAlign="Center" style="POSITION: absolute; TOP: 16px; LEFT: 313px;">
-            <br />&nbsp;
-            <asp:Label ID="lblGreeting" runat="server" Width="256px" Height="150px" /> <br /> <br />
-            <asp:Image ID="imgDefault" runat="server" Width="212px" Height="160px" />
-
-        </asp:Panel>
-
+        <br style="clear:both" /> 
     </form>
 </body>
 </html>
